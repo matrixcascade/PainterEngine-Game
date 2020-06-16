@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}</ProjectGuid>
+    <RootNamespace>PainterEngineGame</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Game_Object_Alien.c" />
+    <ClCompile Include="Game_Object_Base.c" />
+    <ClCompile Include="Game_Object_Blackhole.c" />
+    <ClCompile Include="Game_Object_BlackholeExplosion.c" />
+    <ClCompile Include="Game_Object_FireExplosion.c" />
+    <ClCompile Include="Game_Object_Mine.c" />
+    <ClCompile Include="Game_Object_Missile.c" />
+    <ClCompile Include="Game_Object_Nuclear.c" />
+    <ClCompile Include="Game_Object_Pickup.c" />
+    <ClCompile Include="Game_Object_PickupExplosion.c" />
+    <ClCompile Include="Game_Object_Piercer.c" />
+    <ClCompile Include="Game_Object_ProtectShield.c" />
+    <ClCompile Include="Game_Object_Railgun.c" />
+    <ClCompile Include="Game_Object_RailgunExplosion.c" />
+    <ClCompile Include="Game_Object_RailgunFire.c" />
+    <ClCompile Include="Game_Object_Ship.c" />
+    <ClCompile Include="Game_Object_Shotgun.c" />
+    <ClCompile Include="Game_Object_LaunchFire.c" />
+    <ClCompile Include="Game_Object_Stone.c" />
+    <ClCompile Include="Game_Object_Treasure.c" />
+    <ClCompile Include="Game_Object_TreasureTag.c" />
+    <ClCompile Include="Game_Play.c" />
+    <ClCompile Include="Game_ResoucesLoader.c" />
+    <ClCompile Include="PainterEngine_Startup.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game_ObjectTypes.h" />
+    <ClInclude Include="Game_Object_Alien.h" />
+    <ClInclude Include="Game_Object_Base.h" />
+    <ClInclude Include="Game_Object_Blackhole.h" />
+    <ClInclude Include="Game_Object_BlackholeExplosion.h" />
+    <ClInclude Include="Game_Object_FireExplosion.h" />
+    <ClInclude Include="Game_Object_Mine.h" />
+    <ClInclude Include="Game_Object_Missile.h" />
+    <ClInclude Include="Game_Object_Nuclear.h" />
+    <ClInclude Include="Game_Object_Pickup.h" />
+    <ClInclude Include="Game_Object_PickupExplosion.h" />
+    <ClInclude Include="Game_Object_Piercer.h" />
+    <ClInclude Include="Game_Object_ProtectShield.h" />
+    <ClInclude Include="Game_Object_Railgun.h" />
+    <ClInclude Include="Game_Object_RailgunExplosion.h" />
+    <ClInclude Include="Game_Object_RailgunFire.h" />
+    <ClInclude Include="Game_Object_Ship.h" />
+    <ClInclude Include="Game_Object_Shotgun.h" />
+    <ClInclude Include="Game_Object_LaunchFire.h" />
+    <ClInclude Include="Game_Object_Stone.h" />
+    <ClInclude Include="Game_Object_Treasure.h" />
+    <ClInclude Include="Game_Object_TreasureTag.h" />
+    <ClInclude Include="Game_Play.h" />
+    <ClInclude Include="Game_ResoucesLoader.h" />
+    <ClInclude Include="Game_Text.h" />
+    <ClInclude Include="PainterEngine_Startup.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PainterEngine\PainterEngine.vcxproj">
+      <Project>{01f0d4cb-1450-4d57-bfbc-2699c93dca81}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

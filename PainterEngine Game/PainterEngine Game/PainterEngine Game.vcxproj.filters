@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game_Object_Ship.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Play.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_ResoucesLoader.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PainterEngine_Startup.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Shotgun.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_FireExplosion.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Base.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_RailgunFire.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_RailgunExplosion.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Missile.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Nuclear.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Mine.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_LaunchFire.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Blackhole.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_BlackholeExplosion.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Stone.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Pickup.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_PickupExplosion.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Treasure.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_TreasureTag.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_ProtectShield.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Alien.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Piercer.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Object_Railgun.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game_Object_Ship.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_ObjectTypes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Play.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_ResoucesLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Text.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PainterEngine_Startup.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Base.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Shotgun.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_FireExplosion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Railgun.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_RailgunFire.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_RailgunExplosion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Missile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Nuclear.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Mine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_LaunchFire.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Blackhole.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_BlackholeExplosion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Stone.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Pickup.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_PickupExplosion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Treasure.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_TreasureTag.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_ProtectShield.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Alien.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_Object_Piercer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PainterEngine Game Server", "PainterEngine Game Server\PainterEngine Game Server.vcxproj", "{F001FE7F-C012-4972-8387-EDF7672930CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81} = {01F0D4CB-1450-4D57-BFBC-2699C93DCA81}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PainterEngine Game Client", "PainterEngine Game Client\PainterEngine Game Client.vcxproj", "{75B167BD-98E5-4594-976B-797FB0E568FC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81} = {01F0D4CB-1450-4D57-BFBC-2699C93DCA81}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PainterEngine Game", "PainterEngine Game\PainterEngine Game.vcxproj", "{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PainterEngine", "PainterEngine\PainterEngine.vcxproj", "{01F0D4CB-1450-4D57-BFBC-2699C93DCA81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F001FE7F-C012-4972-8387-EDF7672930CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F001FE7F-C012-4972-8387-EDF7672930CE}.Debug|Win32.Build.0 = Debug|Win32
+		{F001FE7F-C012-4972-8387-EDF7672930CE}.Release|Win32.ActiveCfg = Release|Win32
+		{F001FE7F-C012-4972-8387-EDF7672930CE}.Release|Win32.Build.0 = Release|Win32
+		{75B167BD-98E5-4594-976B-797FB0E568FC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{75B167BD-98E5-4594-976B-797FB0E568FC}.Debug|Win32.Build.0 = Debug|Win32
+		{75B167BD-98E5-4594-976B-797FB0E568FC}.Release|Win32.ActiveCfg = Release|Win32
+		{75B167BD-98E5-4594-976B-797FB0E568FC}.Release|Win32.Build.0 = Release|Win32
+		{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}.Debug|Win32.Build.0 = Debug|Win32
+		{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}.Release|Win32.ActiveCfg = Release|Win32
+		{27F4BE06-63D7-410A-BFE2-E7BD854CE07E}.Release|Win32.Build.0 = Release|Win32
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81}.Debug|Win32.ActiveCfg = Debug|Win32
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81}.Debug|Win32.Build.0 = Debug|Win32
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81}.Release|Win32.ActiveCfg = Release|Win32
+		{01F0D4CB-1450-4D57-BFBC-2699C93DCA81}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

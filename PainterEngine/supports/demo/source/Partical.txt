@@ -1,0 +1,28 @@
+px_texture texture;
+px_memory  binmemory;
+px_char    scriptChain[][260]={"../../PainterEngine/demo/partical.txt"};
+PX_Partical_Launcher launcher;
+PX_ScriptVM_Instance sIns;
+DWORD time,elpased;
+px_int size;
+px_animationlibrary animationLib;
+px_animation animation;
+
+time=timeGetTime();
+char FPS_Text[128]="calculating...";
+DWORD _10sec=timeGetTime(),fps=0;
+
+elpased=timeGetTime()-time;
+time=timeGetTime();
+fps++;
+if (time-_10sec>2000)
+{
+	sprintf(FPS_Text,"FPS:%d",fps/2);
+	fps=0;
+	_10sec=time;
+}
+PX_AnimationUpdate(&animation,elpased);
+PX_ParticalUpdate(&launcher,elpased);
+PX_ParticalRender(&launcher,&PX_surface,PX_POINT(300,240,0));
+PX_AnimationRender(&animation,&PX_surface,PX_POINT(300,240,0),PX_TEXTURERENDER_REFPOINT_CENTER,PX_NULL);
+PX_FontDrawText(&PX_surface,0,32,FPS_Text,PX_COLOR(255,255,0,255));

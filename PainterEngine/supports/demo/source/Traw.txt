@@ -1,0 +1,10 @@
+	px_int size;
+	px_byte *buffer=PX_LoadFileToMemory("D:\\loading\\1.traw",&size);
+	if(buffer)
+	{
+		if(PX_TextureCreateFromMemory(&mempool,buffer,size,&texture))
+		{
+			PX_TextureRender(&surface,&texture,100,100);
+		}
+	}
+	free(buffer);

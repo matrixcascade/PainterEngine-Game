@@ -1,0 +1,77 @@
+
+	px_memorypool mp;
+	px_double test[16];
+	px_double out[16];
+	px_complex cmp[8];
+	px_double wd[8];
+	px_double l[4];
+	px_double cout[16];
+	px_int i,s;
+	px_int blk,woft;
+	PX_Tuning tn;
+
+	PX_memset(out,0,sizeof(out));
+	PX_memset(wd,0,sizeof(wd));
+	PX_memset(l,0,sizeof(l));
+	PX_memset(cout,0,sizeof(cout));
+
+	mp=MP_Create(runtime,sizeof(runtime));
+	PX_TuningInitialize(&mp,&tn,1.0,PX_NULL,PX_NULL,PX_NULL,PX_TUNING_WINDOW_SIZE_8);
+
+	PX_WindowFunction_hanning(wd,8);
+	for (i=0;i<16;i++)
+	{
+		test[i]=i;
+	}
+
+
+	
+	blk=-1;
+	woft=0;
+	for (blk=-1;blk<3;blk++)
+	{
+		if (blk==-1)
+		{
+			PX_memset(cmp,0,sizeof(cmp));
+		}
+		else if(blk==0)
+		{
+			for (i=0;i<4;i++)
+			{
+				cmp[i].re=0;
+				cmp[i].im=0;
+			}
+			for (;i<8;i++)
+			{
+				cmp[i].re=test[(blk-1)*4+i];
+			}
+		}
+		else
+		{
+			for (i=0;i<8;i++)
+			{
+				cmp[i].re=test[(blk-1)*4+i];
+				cmp[i].im=0;
+			}
+		}
+
+		for (i=0;i<8;i++)
+		{
+			cmp[i].re*=wd[i];
+			cmp[i].im=0;
+		}
+
+		PX_FFT(cmp,cmp,8);
+		PX_IFFT(cmp,cmp,8);
+
+		for (i=0;i<4;i++)
+		{
+			cout[woft]=cmp[i].re+l[i];
+			woft++;
+			l[i]=cmp[i+4].re;
+		}
+
+	}
+	
+	s=PX_TuningFilter(&tn,test,8,out);
+	PX_TuningFilter(&tn,test+8,8,out+s);

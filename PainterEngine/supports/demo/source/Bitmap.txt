@@ -1,0 +1,10 @@
+		PX_BitmapRender(&surface,resBuffer,filesize,0,0);
+		PX_TextureCreateRotationAngle(&mempool,&pxtex2,angle,&pxtex4);
+		PX_TextureRender(&surface,&pxtex4,0,0);
+		PX_TextureFree(&pxtex4);
+		PX_TextureRender(&surface,&pxtex,100,100);
+ 	PX_BitmapRender(&surface,resBuffer2,filesize2,300,0);
+ 	PX_GeoDrawSolidCircle(&surface,200,200,100,PX_COLOR(128,255,0,0));
+ 	PX_GeoDrawSolidCircle(&surface,300,200,100,PX_COLOR(128,0,255,0));
+ 	PX_GeoDrawLine(&surface,200,200,200+100*PX_sin_angle(angle),200+100*PX_cos_angle(angle),10,PX_COLOR(128,0,0,0));
+		PX_GeoDrawCircle(&surface,200,200,100,10,PX_COLOR(128,0,0,0));

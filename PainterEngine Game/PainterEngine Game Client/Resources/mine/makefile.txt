@@ -1,0 +1,23 @@
+texture "1.traw" a1
+texture "2.traw" a2
+texture "3.traw" a3
+
+animation prepare
+loop -1
+tag prepare_loop
+frame a1
+sleep 200
+frame a3
+sleep 200
+goto prepare_loop
+end
+
+animation armed
+loop -1
+tag fire_loop
+frame a1
+sleep 200
+frame a2
+sleep 200
+goto fire_loop
+end

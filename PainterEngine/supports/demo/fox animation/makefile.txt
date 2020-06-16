@@ -1,0 +1,91 @@
+texture "release/jump 0.traw" jump_0
+texture "release/jump up.traw" jump_up
+texture "release/jump down.traw" jump_down
+texture "release/run 1.traw" run_1
+texture "release/run 2.traw" run_2
+texture "release/run 3.traw" run_3
+texture "release/run 4.traw" run_4
+texture "release/run 5.traw" run_5
+texture "release/run 6.traw" run_6
+texture "release/stand 1.traw" stand_1
+texture "release/stand 2.traw" stand_2
+texture "release/stand 3.traw" stand_3
+texture "release/stand 4.traw" stand_4
+texture "release/stand 5.traw" stand_5
+texture "release/stand 6.traw" stand_6
+texture "release/stand 7.traw" stand_7
+texture "release/stand 8.traw" stand_8
+texture "release/walk 1.traw" walk_1
+texture "release/walk 2.traw" walk_2
+texture "release/walk 3.traw" walk_3
+texture "release/walk 4.traw" walk_4
+texture "release/walk 5.traw" walk_5
+texture "release/walk 6.traw" walk_6
+
+animation jump_begin
+frame jump_0
+sleep 50
+frame jump_up
+end
+
+animation jump_down
+frame jump_down
+end
+
+animation run
+loop -1
+tag run_begin
+frame run_1
+sleep 60
+frame run_2
+sleep 60
+frame run_3
+sleep 60
+frame run_4
+sleep 60
+frame run_5
+sleep 60
+frame run_6
+sleep 60
+goto run_begin
+end
+
+animation stand
+loop -1
+tag stand_begin
+frame stand_1
+sleep 200
+frame stand_2
+sleep 200
+frame stand_3
+sleep 200
+frame stand_4
+sleep 200
+frame stand_5
+sleep 200
+frame stand_6
+sleep 200
+frame stand_7
+sleep 200
+frame stand_8
+sleep 200
+goto stand_begin
+end
+
+animation walk
+loop -1
+tag walk_begin
+frame walk_1
+sleep 100
+frame walk_2
+sleep 100
+frame walk_3
+sleep 100
+frame walk_4
+sleep 100
+frame walk_5
+sleep 100
+frame walk_6
+sleep 100
+goto walk_begin
+end

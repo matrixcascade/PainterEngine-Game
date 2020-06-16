@@ -1,0 +1,103 @@
+#include "PainterEngineHelper.h"
+
+int mains()
+{
+//	PX_3D_Face face;
+	PX_3D_RenderList renderlist;
+	PX_3D_Camera camera;
+	PX_3D_World world;
+	PX_3D_ObjectData Obj;
+	PX_IO_Data io;
+	px_float angle=0; 
+	PX_Initialize("PainterEngine",600,600);
+	PX_3D_ObjectDataInitialize(PX_GetMP(),&Obj);
+	io=PX_LoadFileToIOData("test.obj");
+	PX_3D_ObjectDataLoad(&Obj,io.buffer,io.size);
+
+	PX_3D_RenderListInitialize(PX_GetMP(),&renderlist,PX_3D_PRESENTMODE_LINE|PX_3D_PRESENTMODE_TEXTURE,PX_3D_CULLMODE_NONE,PX_NULL);
+	PX_3D_ObjectDataToRenderList(&Obj,&renderlist);
+	PX_3D_CameraUVNInitialize(PX_GetMP(),&camera,PX_POINT4D(0,0,0),PX_POINT4D(0,0,1),1,999,90,600,600);
+	
+	while(PX_Loop())
+	{
+		PX_SurfaceClear(PX_GetSurface(),0,0,PX_GetSurface()->width-1,PX_GetSurface()->height-1,PX_COLOR(255,255,255,255));
+		PX_3D_WorldInitialize(&world,0,0,1.3f,0,angle++,0,1);
+		PX_3D_Scene(&renderlist,&world,&camera);
+		PX_3D_Present(PX_GetSurface(),&renderlist,&camera);
+	}
+	return 0;
+}
+
+int main()
+{
+	//	PX_3D_Face face;
+	PX_3D_RenderList renderlist;
+	PX_3D_Camera camera;
+	PX_3D_World world;
+	PX_3D_Face face;
+	px_float angle=0; 
+	px_texture tex;
+	
+	PX_Initialize("PainterEngine",600,600);
+	PX_LoadTextureFromFile(PX_GetMP(),&tex,"foxlogo.traw");
+
+	PX_3D_RenderListInitialize(PX_GetMP(),&renderlist,PX_3D_PRESENTMODE_LINE|PX_3D_PRESENTMODE_TEXTURE,PX_3D_CULLMODE_NONE,&tex);
+	PX_3D_CameraUVNInitialize(PX_GetMP(),&camera,PX_POINT4D(0,0,0),PX_POINT4D(0,0,1),1,2,90,600,600);
+	PX_memset(&face,0,sizeof(PX_3D_Face));
+	face.vertex[0].position.x=-0.5f;
+	face.vertex[0].position.y=-0.5f;
+	face.vertex[0].position.z=0;
+	face.vertex[0].u=0;
+	face.vertex[0].v=0;
+	face.vertex[0].clr=PX_COLOR(255,0,0,0);
+
+	face.vertex[1].position.x=-0.5f;
+	face.vertex[1].position.y=0.5f;
+	face.vertex[1].position.z=0;
+	face.vertex[1].u=0;
+	face.vertex[1].v=1;
+	face.vertex[1].clr=PX_COLOR(255,0,0,0);
+
+	face.vertex[2].position.x=0.5f;
+	face.vertex[2].position.y=-0.5f;
+	face.vertex[2].position.z=0;
+	face.vertex[2].u=1;
+	face.vertex[2].v=0;
+	face.vertex[2].clr=PX_COLOR(255,0,0,0);
+
+	PX_3D_RenderListPush(&renderlist,face);
+
+	PX_memset(&face,0,sizeof(PX_3D_Face));
+	face.vertex[0].position.x=0.5f;
+	face.vertex[0].position.y=0.5f;
+	face.vertex[0].position.z=0;
+	face.vertex[0].u=1;
+	face.vertex[0].v=1;
+	face.vertex[0].clr=PX_COLOR(255,0,0,0);
+
+	face.vertex[1].position.x=-0.5f;
+	face.vertex[1].position.y=0.5f;
+	face.vertex[1].position.z=0;
+	face.vertex[1].u=0;
+	face.vertex[1].v=1;
+	face.vertex[1].clr=PX_COLOR(255,0,0,0);
+
+	face.vertex[2].position.x=0.5f;
+	face.vertex[2].position.y=-0.5f;
+	face.vertex[2].position.z=0;
+	face.vertex[2].u=1;
+	face.vertex[2].v=0;
+	face.vertex[2].clr=PX_COLOR(255,0,0,0);
+
+	PX_3D_RenderListPush(&renderlist,face);
+	
+
+
+	while(PX_Loop())
+	{
+		PX_SurfaceClear(PX_GetSurface(),0,0,PX_GetSurface()->width-1,PX_GetSurface()->height-1,PX_COLOR(255,255,255,255));
+		PX_3D_WorldInitialize(&world,0,0,2,angle++,0,0,1);
+		PX_3D_Scene(&renderlist,&world,&camera);
+		PX_3D_Present(PX_GetSurface(),&renderlist,&camera);
+	}
+}

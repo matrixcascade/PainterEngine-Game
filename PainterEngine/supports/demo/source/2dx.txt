@@ -1,0 +1,19 @@
+if (!PX_LoadTextureFromFile(&G_mempool,&texture,"../../PainterEngine/demo/star.traw"))
+{
+	return 0;
+}
+
+
+PX_Load2DxFromFile(&G_mempool,&animationLib,"../../PainterEngine/demo/clock.2dx");
+PX_AnimationCreate(&animation,&animationLib);
+
+PX_MemoryInit(&G_mempool,&binmemory);
+if (!PX_CompileScriptChain(scriptChain,1,"main",&binmemory))
+{
+	return 0;
+}
+PX_ScriptVM_InstanceInit(&sIns,&G_mempool,binmemory.buffer,binmemory.usedsize);
+if (!PX_ParticalLauncherCreate(&launcher,&G_mempool,&texture,&sIns))
+{
+	return 0;
+}

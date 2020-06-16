@@ -1,0 +1,124 @@
+#include "../PainterEngine/PainterEngine.h"
+
+extern "C"
+{   
+	#include "Kernel/PX_Kernel.h"
+	#include "Platform/Px_Platform.h"
+};
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+#define SURFACE_WIDTH 240
+#define SURFACE_HEIGHT 240
+
+#define CACHE_MEMORY (1024*1024*8)
+
+//////////////////////////////////////////////////////////////////////////
+//Global
+PX_UDP udp_connection;
+px_byte PAINTER_ENGINE_MEMORY[CACHE_MEMORY];
+PX_Transmission SendTrans,RecvTrans;
+//////////////////////////////////////////////////////////////////////////
+
+px_byte* PX_LoadFileToMemory(px_char *path,px_int *size)
+{
+	FILE *pf=fopen(path,"rb");
+	px_int filesize;
+	if (!pf)
+	{
+		*size=0;
+		return PX_NULL;
+	}
+	fseek(pf,0,SEEK_END);
+	filesize=ftell(pf);
+	fseek(pf,0,SEEK_SET);
+
+	px_byte *resBuffer=(px_byte *)malloc(filesize+1);
+
+	px_int fileoft=0;
+	while (!feof(pf))
+	{
+		fileoft+=fread(resBuffer+fileoft,1,1024,pf);
+	}
+	fclose(pf);
+	*size=filesize;
+	resBuffer[filesize]='\0';
+	return resBuffer;
+}
+
+
+px_bool PX_TransInit(px_void *v)
+{
+	if(PX_UDPInit(&udp_connection))
+	{
+		return PX_UDPListen(&udp_connection,4567);
+	}
+	return PX_FALSE;
+}
+
+px_bool PX_TransWrite(px_byte *data,px_int size)
+{
+	px_dword ip=inet_addr("10.0.0.81");
+	return PX_UDPSend(&udp_connection,ip,4567,(px_byte *)data,size);
+}
+
+
+px_bool PX_TransRead(px_byte *buffer,px_int bufferSize,px_int *readsize)
+{
+	px_dword ip;
+	px_ushort port;
+	return PX_UDPReceived(&udp_connection,&ip,&port,buffer,bufferSize,readsize);
+}
+
+
+int main()
+{
+	px_int i;
+	px_memorypool G_mempool;
+	px_byte *buffer1,*buffer2;
+	px_dword time,elpased;
+	G_mempool=MP_Create(PAINTER_ENGINE_MEMORY,CACHE_MEMORY);
+    buffer1=(px_byte *)MP_Malloc(&G_mempool,1024*1024);
+	buffer2=(px_byte *)MP_Malloc(&G_mempool,1024*1024);
+
+	for (i=0;i<1024*1024;i++)
+	{
+		buffer1[i]=(px_byte)(PX_rand()&0xff);
+	}
+	PX_TransInit(PX_NULL);
+	PX_TransmissionInit(&G_mempool,&SendTrans,PX_TransWrite,PX_TransRead,PX_NULL,PX_NULL);
+	PX_TransmissionInit(&G_mempool,&RecvTrans,PX_TransWrite,PX_TransRead,PX_NULL,PX_NULL);
+	
+	PX_TransmissionSend(&SendTrans,buffer1,1024*1024);
+
+	time=timeGetTime();
+	while(PX_TRUE)
+	{
+	  elpased=timeGetTime()-time;
+	  time=timeGetTime();
+	  if(elpased>0)
+	  {
+		  PX_TransmissionUpdate(&SendTrans,elpased);
+		  PX_TransmissionUpdate(&RecvTrans,elpased);
+		  if (PX_TransmissionRecv(&RecvTrans,buffer2,1024*1024))
+		  {
+			  for (i=0;i<1420;i++)
+			  {
+				 if (buffer2[i]!=buffer1[i])
+				 {
+					 return PX_FALSE;
+				 }
+			  }
+			  break;
+		  }
+	  }
+	}
+	PX_TransmissionFree(&SendTrans);
+	PX_TransmissionFree(&RecvTrans);
+	MP_Free(&G_mempool,buffer1);
+	MP_Free(&G_mempool,buffer2);
+	MP_DEBUG_AID(&G_mempool);
+}
+
+

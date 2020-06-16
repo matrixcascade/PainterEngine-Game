@@ -1,0 +1,42 @@
+texture "1.traw" f1
+texture "2.traw" f2
+texture "3.traw" f3
+texture "4.traw" f4
+texture "5.traw" f5
+texture "6.traw" f6
+texture "7.traw" f7
+texture "8.traw" f8
+texture "9.traw" f9
+texture "10.traw" f10
+texture "11.traw" f11
+texture "12.traw" f12
+
+animation clock
+loop -1
+tag begin
+frame f1
+sleep 100
+frame f2
+sleep 90
+frame f3
+sleep 80
+frame f4
+sleep 70
+frame f5
+sleep 60
+frame f6
+sleep 50
+frame f7
+sleep 40
+frame f8
+sleep 30
+frame f9
+sleep 20
+frame f10
+sleep 20
+frame f11
+sleep 20
+frame f12
+sleep 20
+goto begin
+end

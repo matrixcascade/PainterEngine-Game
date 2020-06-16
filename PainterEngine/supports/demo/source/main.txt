@@ -1,0 +1,78 @@
+#include "../PainterEngine/PainterEngine.h"
+
+extern "C"
+{   
+	#include "Kernel/PX_Kernel.h"
+	#include "Platform/Px_Platform.h"
+};
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+#define SURFACE_WIDTH 240
+#define SURFACE_HEIGHT 240
+
+#define CACHE_MEMORY (1024*1024*8)
+
+
+px_byte* PX_LoadFileToMemory(px_char *path,px_int *size)
+{
+	FILE *pf=fopen(path,"rb");
+	px_int filesize;
+	if (!pf)
+	{
+		*size=0;
+		return PX_NULL;
+	}
+	fseek(pf,0,SEEK_END);
+	filesize=ftell(pf);
+	fseek(pf,0,SEEK_SET);
+
+	px_byte *resBuffer=(px_byte *)malloc(filesize+1);
+
+	px_int fileoft=0;
+	while (!feof(pf))
+	{
+		fileoft+=fread(resBuffer+fileoft,1,1024,pf);
+	}
+	fclose(pf);
+	*size=filesize;
+	resBuffer[filesize]='\0';
+	return resBuffer;
+}
+
+
+
+
+int main()
+{
+	PainterEngine pt;
+	Pt_Texture G_Texture;
+	Pt_Actor_Tile G_Tile;
+	px_memorypool G_mempool;
+	px_surface PX_surface;
+	
+
+	pt.Initialize(WINDOW_WIDTH,WINDOW_HEIGHT);
+	pt.CreateTexture(SURFACE_WIDTH,SURFACE_HEIGHT,G_Texture);
+	G_Tile.bindTexture(G_Texture);
+	G_Tile.move((WINDOW_WIDTH-SURFACE_WIDTH)/2,(WINDOW_HEIGHT-SURFACE_HEIGHT)/2);
+	pt.registerActor(&G_Tile);
+	pt.SetBackgroundColor(0xffffffff);
+	G_mempool=MP_Create(PAINTER_ENGINE_MEMORY,CACHE_MEMORY);
+	PX_SurfaceCreate(&G_mempool,SURFACE_WIDTH,SURFACE_HEIGHT,&PX_surface);
+    
+
+	while (Pt_System_Loop())
+	{
+
+		pt_color *ptex=G_Texture.LockBuffer();
+		memcpy(ptex,PX_surface.surfaceBuffer,SURFACE_WIDTH*SURFACE_HEIGHT*4);
+		G_Texture.UnlockBuffer();
+		pt.Render();
+	}  
+
+
+}
+
+

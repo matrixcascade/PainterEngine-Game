@@ -1,0 +1,46 @@
+
+#include "./PainterEngine/PainterEngineHelper.h"
+
+px_void PixelShader(px_surface *psurface,px_int x,px_int y,px_float u,px_float v,px_point4D normal,px_texture *pTexture,px_color color)
+{
+	px_float alpha;
+	px_float cosv=PX_Point4DDot(PX_Point4DUnit(normal),PX_POINT4D(0,0,1));
+	
+	cosv=-cosv;
+	if (cosv>0)
+	{
+		alpha=(1-cosv)*128;
+		PX_SurfaceDrawPixel(psurface,x,y,PX_COLOR(255,128+alpha,128+alpha,128+alpha));
+	}
+}
+
+// 
+
+// 
+int main()
+{
+	PX_3D_RenderList renderlist;
+	PX_3D_Camera camera;
+	PX_3D_World world;
+	PX_3D_ObjectData Obj;
+	PX_IO_Data io;
+	px_float angle=0; 
+	PX_Initialize("PainterEngine",600,600);
+	PX_3D_ObjectDataInitialize(PX_GetMP(),&Obj);
+	io=PX_LoadFileToIOData("bunny.obj");
+	PX_3D_ObjectDataLoad(&Obj,io.buffer,io.size);
+
+	PX_3D_RenderListInitialize(PX_GetMP(),&renderlist,PX_3D_PRESENTMODE_TEXTURE|PX_3D_PRESENTMODE_PURE,PX_3D_CULLMODE_CCW,PX_NULL);
+	PX_3D_RenderListSetPixelShader(&renderlist,PixelShader);
+	PX_3D_ObjectDataToRenderList(&Obj,&renderlist);
+	PX_3D_CameraUVNInitialize(PX_GetMP(),&camera,PX_POINT4D(0,0,0),PX_POINT4D(0,0,1),1,999,90,600,600);
+
+	while(PX_Loop())
+	{
+		PX_SurfaceClear(PX_GetSurface(),0,0,PX_GetSurface()->width-1,PX_GetSurface()->height-1,PX_COLOR(255,255,255,255));
+		PX_3D_WorldInitialize(&world,0,0,1.3f,0,angle++,0,1);
+		PX_3D_Scene(&renderlist,&world,&camera);
+		PX_3D_Present(PX_GetSurface(),&renderlist,&camera);
+	}
+	return 0;
+}

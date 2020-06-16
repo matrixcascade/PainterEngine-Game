@@ -1,0 +1,75 @@
+px_memory pm;
+
+PX_MemoryInit(&mempool,&pm);
+mempool.nodeCount;
+if(!PX_ScriptAsmCompile(&mempool,resBuffer,&pm))
+return 0;
+
+PX_Script_Instance instance;
+scriptpool=MP_Create(MP_Malloc(&mempool,64*1024),64*1024);
+px_int memfreesize=scriptpool.FreeSize;
+if(!PX_ScriptVM_InstanceInit(&instance,&scriptpool,pm.buffer,pm.usedsize))
+return 0;
+
+PX_ScriptVM_RegistHostFunction(&instance,"PRINT",PX_Print);
+
+instance.runInstrTick=0xffffffff;
+PX_ScriptVM_InstanceRunFunction(&instance,"_MAIN");
+
+PX_ScriptVM_InstanceFree(&instance);
+if (scriptpool.FreeSize!=memfreesize)
+{
+printf("Script Memory overflow!\n");
+}
+
+PX_MemoryFree(&pm);
+
+
+
+
+px_char PX_Compile_Cache[1024*1024*26];
+
+px_bool PX_CompileScriptChain(px_char path[][260],px_int count,px_char *name,px_memory *bin)
+{
+	PX_SCRIPT_LIBRARY lib;
+	px_memorypool CompileMp;
+	px_int i,fsize;
+	px_byte *buffer;
+	px_string asmcodeString;
+
+	CompileMp=MP_Create(PX_Compile_Cache,1024*1024*16);
+
+	if(!PX_ScriptCompilerInit(&lib,&CompileMp))
+	{
+		return PX_FALSE;
+	}
+
+	for (i=0;i<count;i++)
+	{
+		if(buffer=PX_LoadFileToMemory(path[i],&fsize))
+		{
+			if(!PX_ScriptCompilerLoad(&lib,(px_char *)buffer))
+			{
+				free(buffer);
+				return PX_FALSE;
+			}
+		}
+		free(buffer);
+	}
+
+	PX_StringInit(&CompileMp,&asmcodeString);
+	if(PX_ScriptCompilerCompile(&lib,"main",&asmcodeString,32))
+	{
+		PX_ScriptAsmOptimization(&asmcodeString);
+		
+		if(!PX_ScriptAsmCompile(&CompileMp,asmcodeString.buffer,bin))
+		{
+			return PX_FALSE;
+		}
+	}
+	
+	PX_StringFree(&asmcodeString);
+	PX_ScriptCompilerFree(&lib);
+
+	return PX_TRUE;
+}

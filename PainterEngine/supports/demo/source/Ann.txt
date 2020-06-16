@@ -1,0 +1,85 @@
+
+#include "./PainterEngine/PainterEngineHelper.h"
+
+#define SURFACE_WIDTH 240
+#define SURFACE_HEIGHT 240
+int main()
+{
+
+	PX_ANN ann;
+	px_int epoch=0;
+	px_string echo;
+	px_point class1[32],class2[32];
+	int x,y,i;
+	PX_Initialize("ANN",SURFACE_WIDTH,SURFACE_HEIGHT);
+	PX_StringInit(PX_GetMP(),&echo);
+	if(!PX_ANNInit(PX_GetMP(),&ann,0.3,PX_ANN_REGULARZATION_NONE,0)) return 0;
+
+	PX_ANNAddLayer(&ann,2,0,PX_ANN_ACTIVATION_FUNCTION_LINEAR,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+	PX_ANNAddLayer(&ann,8,0,PX_ANN_ACTIVATION_FUNCTION_SIGMOID,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+	PX_ANNAddLayer(&ann,1,0,PX_ANN_ACTIVATION_FUNCTION_LINEAR,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+
+	for (i=0;i<32;i++)
+	{
+		class1[i].y=6*(PX_rand()/1.0/PX_RAND_MAX);
+		class1[i].x=6*(PX_rand()/1.0/PX_RAND_MAX);
+
+		class2[i].y=6*(PX_rand()/1.0/PX_RAND_MAX)+6;
+		class2[i].x=6*(PX_rand()/1.0/PX_RAND_MAX)+6;
+	}
+
+
+	while (PX_Loop())
+	{
+		//Train
+		for (i=0;i<32;i++)
+		{
+			px_double _in[2],_expect;
+			_in[0]=class1[i].x;
+			_in[1]=class1[i].y;
+			_expect=1;
+			PX_ANNTrain(&ann,_in,&_expect);
+
+			_in[0]=class2[i].x;
+			_in[1]=class2[i].y;
+			_expect=-1;
+			PX_ANNTrain(&ann,_in,&_expect);
+		}
+		epoch++;
+
+		//display ann results
+		for (x=0;x<SURFACE_WIDTH;x++)
+		{
+			for (y=0;y<SURFACE_HEIGHT;y++)
+			{
+				px_double _in[2],_out;
+				_in[0]=(x)/20.0;
+				_in[1]=(y)/20.0;
+				PX_ANNForward(&ann,_in);
+				PX_ANNGetOutput(&ann,&_out);
+				if (_out>0)
+				{
+					PX_SurfaceSetPixel(PX_GetSurface(),x,y,PX_COLOR(255,255,255,255));
+				}
+				else
+				{
+					PX_SurfaceSetPixel(PX_GetSurface(),x,y,PX_COLOR(255,0,0,0));
+				}
+			}
+		}
+
+		//draw points
+		for (i=0;i<32;i++)
+		{
+			PX_GeoDrawSolidCircle(PX_GetSurface(),class1[i].x*20,class1[i].y*20,4,PX_COLOR(255,255,0,0));
+			PX_GeoDrawCircle(PX_GetSurface(),class1[i].x*20,class1[i].y*20,4,1,PX_COLOR(255,255,255,192));
+			PX_GeoDrawSolidCircle(PX_GetSurface(),class2[i].x*20,class2[i].y*20,4,PX_COLOR(255,0,0,255));
+			PX_GeoDrawCircle(PX_GetSurface(),class2[i].x*20,class2[i].y*20,4,1,PX_COLOR(255,255,255,192));
+		}
+		PX_StringFormat1(&echo,"current epoch: %1",PX_STRINGFORMAT_INT(epoch));
+		PX_FontDrawText(PX_GetSurface(),0,0,echo.buffer,PX_COLOR(255,128,168,240),PX_FONT_ALIGN_XLEFT);
+	}  
+
+
+
+}

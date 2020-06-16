@@ -1,0 +1,24 @@
+texture "release/run 1.traw" run_1
+texture "release/run 2.traw" run_2
+texture "release/run 3.traw" run_3
+texture "release/run 4.traw" run_4
+texture "release/run 5.traw" run_5
+texture "release/run 6.traw" run_6
+
+animation run
+loop -1
+tag run_begin
+frame run_1
+sleep 60
+frame run_2
+sleep 60
+frame run_3
+sleep 60
+frame run_4
+sleep 60
+frame run_5
+sleep 60
+frame run_6
+sleep 60
+goto run_begin
+end

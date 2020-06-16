@@ -1,0 +1,33 @@
+PX_GUI_Object *pObject=PX_GUI_RootObjectCreate(&mempool,&surface,PX_COLOR(255,255,255,255));
+PX_GUI_Object *pLabel=PX_GUI_LabelCreate(pObject,100,100,200,50,"¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò¸ò",PX_COLOR(255,0,0,0));
+PX_GUI_LabelSetBorder(pLabel,PX_TRUE);
+PX_GUI_LabelSetBkColor(pLabel,PX_COLOR(128,255,0,0));
+
+PX_GUI_Object *procBar=PX_GUI_ProcessBarCreate(pObject,0,0,200,32);
+PX_GUI_ProcessBarSetValue(procBar,50);
+PX_GUI_ProcessBarSetColor(procBar,PX_COLOR(128,0,255,128));
+
+PX_GUI_Object *radius=PX_GUI_RadiusICOCreate(pObject,100,300,5);
+PX_GUI_RadiusICOSetColor(radius,PX_COLOR(255,0,0,0));
+
+px_texture pxtex;
+PX_TextureCreateFromMemory(&mempool,resBuffer,filesize,&pxtex);
+PX_GUI_Object *Image=PX_GUI_ImageCreate(pObject,150,150,&pxtex);
+
+PX_GUI_Object *SliderBar=PX_GUI_SliderBarCreate(pObject,50,50,200,30,PX_GUI_SLIDERBAR_TYPE_HORIZONTAL);
+
+PX_GUI_Object *ListBox=PX_GUI_ListBoxCreate(pObject,0,0,150,10);
+PX_GUI_ListBoxAddItem(ListBox,"1000-ASDFGHG");
+PX_GUI_ListBoxAddItem(ListBox,"1001-ASDFGHG");
+PX_GUI_ListBoxAddItem(ListBox,"1002-ASDFGHG");
+PX_GUI_ListBoxAddItem(ListBox,"1003-ASDFGHG");
+PX_GUI_ListBoxAddItem(ListBox,"1004-ASDFGHG");
+PX_GUI_ListBoxAddItem(ListBox,"1005-ASDFGHG");
+
+
+	PX_GUI_ListBoxAddItem(ListBox,"1006-ASDFGHG");
+	PX_GUI_ListBoxAddItem(ListBox,"1007-ASDFGHG");
+	PX_GUI_ListBoxAddItem(ListBox,"1008-ASDFGHG");
+	PX_GUI_ListBoxAddItem(ListBox,"1009-ASDFGHG");
+	PX_GUI_ListBoxAddItem(ListBox,"100a-ASDFGHG");
+	PX_GUI_ListBoxAddItem(ListBox,"100b-ASDFGHG");

@@ -1,0 +1,18 @@
+texture "1.traw" a1
+texture "2.traw" a2
+texture "3.traw" a3
+
+
+
+animation main
+loop -1
+tag loop
+frame a1
+sleep 80
+frame a2
+sleep 80
+frame a3
+sleep 80
+goto loop
+end
+

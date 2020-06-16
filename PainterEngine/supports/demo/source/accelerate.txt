@@ -1,0 +1,40 @@
+HANDLE events[3];
+
+px_int PX_CreateParallel_Create(PX_PARALLEL_EXEC_FUNC _func,px_void *p)
+{
+	HANDLE hThread;
+	DWORD  threadId;
+	hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)_func,p,0,&threadId); 
+	CloseHandle(hThread);
+	return 0;
+}
+px_int PX_Parallel_SetSignal(px_int index,px_bool setting)
+{
+	if (setting)
+	{
+		ResetEvent(events[index]);
+		WaitForSingleObject(events[index],INFINITE);
+	}
+	else
+	{
+		SetEvent(events[index]);
+	}
+	return 0;
+}
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////
+events[0] = CreateEvent(NULL,FALSE,FALSE,NULL);
+events[1] = CreateEvent(NULL,FALSE,FALSE,NULL);
+events[2] = CreateEvent(NULL,FALSE,FALSE,NULL);
+PX_PARALLEL_EXTRA_CORE_SET(PX_CreateParallel_Create,PX_Parallel_SetSignal,3);
+
+////////////////////////////////////////////////////////////////////////

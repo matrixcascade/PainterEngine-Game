@@ -1,0 +1,163 @@
+
+#include "./PainterEngine/PainterEngineHelper.h"
+
+#define SURFACE_WIDTH 320
+#define SURFACE_HEIGHT 320
+
+
+px_point red[64],green[64];
+px_int  rcount,gcount;
+px_bool start=PX_FALSE;
+px_void PX_OnButtonDown(PX_Object *pObj,PX_Object_Event e,px_void *ptr)
+{
+	if (e.Param_int[0]<48&&e.Param_int[1]<32)
+	{
+		return;
+	}
+	if (e.Event==PX_OBJECT_EVENT_CURSORDOWN)
+	{
+		red[rcount].x=e.Param_int[0]*1.0/SURFACE_WIDTH;
+		red[rcount].y=e.Param_int[1]*1.0/SURFACE_HEIGHT;
+		rcount++;
+	}
+	if (e.Event==PX_OBJECT_EVENT_CURSORRDOWN)
+	{
+		green[gcount].x=e.Param_int[0]*1.0/SURFACE_WIDTH;
+		green[gcount].y=e.Param_int[1]*1.0/SURFACE_HEIGHT;
+		gcount++;
+	}
+}
+
+px_void PX_OnButtonStart(PX_Object *pObj,PX_Object_Event e,px_void *ptr)
+{
+	if (!PX_ObjectIsCursorInRegion(pObj,e))
+	{
+		return;
+	}
+	start=PX_TRUE;
+}
+
+int main()
+{
+	px_int i;
+	PX_ANN ann;
+	px_int epoch=0;
+	px_char text[32];
+	PX_Object *btn;
+
+
+	PX_Initialize("ANN",SURFACE_WIDTH,SURFACE_HEIGHT);
+	if(!PX_ANNInit(PX_GetMP(),&ann,1,PX_ANN_REGULARZATION_NONE,0)) return 0;
+	PX_ObjectRegisterEvent(PX_GetUiRoot(),PX_OBJECT_EVENT_CURSORDOWN,PX_OnButtonDown,PX_NULL);
+	PX_ObjectRegisterEvent(PX_GetUiRoot(),PX_OBJECT_EVENT_CURSORRDOWN,PX_OnButtonDown,PX_NULL);
+
+	btn=PX_Object_PushButtonCreate(PX_GetMP(),PX_GetUiRoot(),0,0,48,16,"start",PX_COLOR(255,0,0,0));
+	PX_ObjectRegisterEvent(btn,PX_OBJECT_EVENT_CURSORCLICK,PX_OnButtonStart,PX_NULL);
+
+	PX_ANNAddLayer(&ann,2,0,PX_ANN_ACTIVATION_FUNCTION_LINEAR,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+	PX_ANNAddLayer(&ann,6,0.5,PX_ANN_ACTIVATION_FUNCTION_SIGMOID,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+	PX_ANNAddLayer(&ann,2,0.5,PX_ANN_ACTIVATION_FUNCTION_SIGMOID,PX_ANN_LAYER_WEIGHT_INITMODE_GAUSSRAND,0);
+	
+	while (PX_Loop())
+	{
+		px_double _in[2],_out[2];
+		px_int x,y,div=10;
+		
+		if ((epoch%100)==0)
+		{
+			//render
+			PX_Clear(PX_COLOR(255,255,255,255));
+			for (x=0;x<SURFACE_WIDTH;x+=div)
+			{
+				for (y=0;y<SURFACE_HEIGHT;y+=div)
+				{
+					_in[0]=x*1.0/SURFACE_WIDTH;
+					_in[1]=y*1.0/SURFACE_WIDTH;
+					//forward
+					PX_ANNForward(&ann,_in);
+					PX_ANNGetOutput(&ann,_out);
+					if (_out[0]>1)
+					{
+						_out[0]=1;
+					}
+					if (_out[0]<0)
+					{
+						_out[0]=0;
+					}
+					if (_out[1]>1)
+					{
+						_out[1]=1;
+					}
+					if (_out[1]<0)
+					{
+						_out[1]=0;
+					}
+					PX_GeoDrawRect(PX_GetSurface(),x,y,x+div,y+div,PX_COLOR(255,(px_uchar)(255*_out[0]),(px_uchar)(255*_out[1]),255));
+				}
+			}
+
+
+			for (i=0;i<(rcount>gcount?rcount:gcount);i++)
+			{
+				if (i<rcount)
+				{
+					x=red[i].x*SURFACE_WIDTH;
+					y=red[i].y*SURFACE_HEIGHT;
+					PX_GeoDrawSolidCircle(PX_GetSurface(),x,y,5,PX_COLOR(255,255,0,0));
+					PX_GeoDrawCircle(PX_GetSurface(),x,y,5,1,PX_COLOR(255,0,0,0));
+				}
+
+				if (i<gcount)
+				{
+					x=green[i].x*SURFACE_WIDTH;
+					y=green[i].y*SURFACE_HEIGHT;
+
+					PX_GeoDrawSolidCircle(PX_GetSurface(),x,y,5,PX_COLOR(255,0,255,0));
+					PX_GeoDrawCircle(PX_GetSurface(),x,y,5,1,PX_COLOR(255,0,0,0));
+				}
+
+			}
+			PX_sprintf1(text,sizeof(text),"epoch=%1",PX_STRINGFORMAT_INT(epoch));
+			PX_FontDrawText(PX_GetSurface(),SURFACE_WIDTH/2,5,text,PX_COLOR(255,64,128,192),PX_FONT_ALIGN_XCENTER);
+		}
+
+		if (start)
+		{
+			for (i=0;i<(rcount>gcount?rcount:gcount);i++)
+			{
+				if (i<rcount)
+				{
+					//train
+					_in[0]=red[i].x;
+					_in[1]=red[i].y;
+
+					_out[0]=0.999;
+					_out[1]=0.001;
+
+					printf("err=%lf\n",PX_ANNTrain(&ann,_in,_out));
+				}
+
+				if (i<gcount)
+				{
+					//train
+					_in[0]=green[i].x;
+					_in[1]=green[i].y;
+
+					_out[0]=0.001;
+					_out[1]=0.999;
+
+					printf("err=%lf\n",PX_ANNTrain(&ann,_in,_out));
+				}
+			}
+			epoch++;
+		}
+		
+		
+		
+	}
+	
+
+
+
+
+}

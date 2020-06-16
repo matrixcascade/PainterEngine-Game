@@ -1,0 +1,15 @@
+	px_texture pxtex,pxtex2,pxtex3,pxtex4;
+	PX_TextureCreateFromMemory(&mempool,resBuffer,filesize,&pxtex);
+	PX_TextureCreateScale(&mempool,&pxtex,200,100,&pxtex2);
+	PX_TextureCreate(&mempool,&pxtex3,4,2);  
+
+	px_int size;
+	px_byte *buffer=PX_LoadFileToMemory("D:\\loading\\1.traw",&size);
+	if(buffer)
+	{
+		if(PX_TextureCreateFromMemory(&mempool,buffer,size,&texture))
+		{
+			PX_TextureRender(&surface,&texture,100,100);
+		}
+	}
+	free(buffer);
